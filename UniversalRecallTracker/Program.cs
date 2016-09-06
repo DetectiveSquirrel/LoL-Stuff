@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -178,7 +179,6 @@ namespace UniversalRecallTracker
                     () =>
                         new Vector2(Program.Instance().X, Program.Instance().Y - (_index * TextFont.Description.Height))
             };
-            _sprite.Add(0);
             _healthText = new Render.Text(0, 0, "", TextFont.Description.Height, Color.Green)
             {
                 OutLined = true,
@@ -192,7 +192,6 @@ namespace UniversalRecallTracker
                 },
                 TextUpdate = () => "(" + (int) hero.HealthPercent + "%)"
             };
-            _healthText.Add(1);
             Render.Text heroText = new Render.Text(0, 0, hero.ChampionName, TextFont.Description.Height, Color.White)
             {
                 OutLined = true,
@@ -206,13 +205,11 @@ namespace UniversalRecallTracker
                 }
             };
 
-            heroText.Add(1);
             _countdownText = new Render.Text(0, 0, "", TextFont.Description.Height, Color.White)
             {
                 OutLined = true,
                 VisibleCondition = sender => _active
             };
-            _countdownText.Add(1);
             Game.OnUpdate += Game_OnGameUpdate;
             Obj_AI_Base.OnTeleport += Obj_AI_Base_OnTeleport;
         }
@@ -227,17 +224,15 @@ namespace UniversalRecallTracker
                     case Packet.S2C.Teleport.Status.Start:
                         _begin = Game.ClockTime;
                         _duration = decoded.Duration;
-                        Program.Instance().Notify(_hero.ChampionName + "(" + (int) _hero.HealthPercent + ") - Started");
                         _active = true;
                         break;
                     case Packet.S2C.Teleport.Status.Finish:
                         int colorIndex = (int) ((_hero.HealthPercent / 100) * 255);
                         string color = (255 - colorIndex).ToString("X2") + colorIndex.ToString("X2") + "00";
-                        Program.Instance().Notify(_hero.ChampionName + "(" + (int) _hero.HealthPercent + ") - Finished");
+                        Program.Instance().Notify(_hero.ChampionName + " has recalled with <font color='#" + color + "'>" + (int) _hero.HealthPercent + "&#37; HP</font>");
                         _active = false;
                         break;
                     case Packet.S2C.Teleport.Status.Abort:
-                        Program.Instance().Notify(_hero.ChampionName + "(" + (int) _hero.HealthPercent + ") - Aborted");
                         _active = false;
                         break;
                     case Packet.S2C.Teleport.Status.Unknown:
