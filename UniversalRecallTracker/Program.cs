@@ -179,6 +179,7 @@ namespace UniversalRecallTracker
                     () =>
                         new Vector2(Program.Instance().X, Program.Instance().Y - (_index * TextFont.Description.Height))
             };
+            _sprite.Add(0);
             _healthText = new Render.Text(0, 0, "", TextFont.Description.Height, Color.Green)
             {
                 OutLined = true,
@@ -192,6 +193,7 @@ namespace UniversalRecallTracker
                 },
                 TextUpdate = () => "(" + (int) hero.HealthPercent + "%)"
             };
+            _healthText.Add(1);
             Render.Text heroText = new Render.Text(0, 0, hero.ChampionName, TextFont.Description.Height, Color.White)
             {
                 OutLined = true,
@@ -205,11 +207,13 @@ namespace UniversalRecallTracker
                 }
             };
 
+            heroText.Add(1);
             _countdownText = new Render.Text(0, 0, "", TextFont.Description.Height, Color.White)
             {
                 OutLined = true,
                 VisibleCondition = sender => _active
             };
+            _countdownText.Add(1);
             Game.OnUpdate += Game_OnGameUpdate;
             Obj_AI_Base.OnTeleport += Obj_AI_Base_OnTeleport;
         }
