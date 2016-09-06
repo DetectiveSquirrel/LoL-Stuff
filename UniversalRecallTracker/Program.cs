@@ -227,17 +227,17 @@ namespace UniversalRecallTracker
                     case Packet.S2C.Teleport.Status.Start:
                         _begin = Game.ClockTime;
                         _duration = decoded.Duration;
-                        Program.Instance().Notify(_hero.ChampionName + " has started recalling with " + (int) _hero.HealthPercent + " HP%");
+                        Program.Instance().Notify(_hero.ChampionName + "(" + (int) _hero.HealthPercent + ") - Started");
                         _active = true;
                         break;
                     case Packet.S2C.Teleport.Status.Finish:
                         int colorIndex = (int) ((_hero.HealthPercent / 100) * 255);
                         string color = (255 - colorIndex).ToString("X2") + colorIndex.ToString("X2") + "00";
-                        Program.Instance().Notify(_hero.ChampionName + " has recalled with " + (int) _hero.HealthPercent + " HP%");
+                        Program.Instance().Notify(_hero.ChampionName + "(" + (int) _hero.HealthPercent + ") - Finished");
                         _active = false;
                         break;
                     case Packet.S2C.Teleport.Status.Abort:
-                        Program.Instance().Notify(_hero.ChampionName + " has aborted recalling with " + (int) _hero.HealthPercent + " HP%");
+                        Program.Instance().Notify(_hero.ChampionName + "(" + (int) _hero.HealthPercent + ") - Aborted");
                         _active = false;
                         break;
                     case Packet.S2C.Teleport.Status.Unknown:
